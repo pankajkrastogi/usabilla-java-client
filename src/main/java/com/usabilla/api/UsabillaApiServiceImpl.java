@@ -1,9 +1,9 @@
-package com.usabilla.api.client;
+package com.usabilla.api;
 
-import com.usabilla.api.client.model.FeedbackCommand;
-import com.usabilla.api.client.utils.HttpMethod;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
+import com.usabilla.api.auth.UsabillaAuthBuilder;
+import com.usabilla.api.client.model.RequestCommand;
+import com.usabilla.api.utils.CommonUtils;
+import com.usabilla.api.utils.HttpMethod;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -21,95 +21,56 @@ import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import javax.net.ssl.SSLException;
 import java.io.InterruptedIOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class UsabillaApiClientImpl implements UsabillaApiClient {
+import static com.usabilla.api.utils.CommonUtils.BASE_URL;
 
-    private static final String HMAC_SHA_256 = "USBL1-HMAC-SHA256";
+public class UsabillaApiServiceImpl implements UsabillaApiService {
 
-    private static final DateTimeFormatter shortDateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
-    private static final DateTimeFormatter longDateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss");
-    private static final String Z = "Z";
-    private static final String USBL_1_REQUEST = "/usbl1_request";
-
-    private static final String BUTTONS_URI = "/live/websites/button";
-    private static final String x_usbl_date = "x-usbl-date";
-    private static final String signedHeaders = "host;x-usbl-date";
     private static final String TIMEOUT = "timeout";
     private static final String ACCEPT = "Accept";
 
-    private final String secret;
-    private final String accessKey;
-    private String usabillaHost;
-    private String BASE_URL;
+    private int TimeoutInMs = 10000;
+    private int KeepAliveInSec = 60;
+    private int MaxThreads = 10;
 
-    private int TimeoutInMs;
-    private int KeepAliveInSec;
-    private int MaxThreads;
+    private String baseUrl = BASE_URL;
 
-    public UsabillaApiClientImpl(final String secret, final String accessKey) {
-        this.secret = secret;
-        this.accessKey = accessKey;
+    private final UsabillaAuthBuilder usabillaAuthBuilder;
 
-        this.BASE_URL = "https://data.usabilla.com";
-        this.usabillaHost = "host:data.usabilla.com";
-        this.TimeoutInMs = 10000;
-        this.KeepAliveInSec = 60;
-        this.MaxThreads = 5;
+    public UsabillaApiServiceImpl(final UsabillaAuthBuilder usabillaAuthBuilder) {
+        this.usabillaAuthBuilder = usabillaAuthBuilder;
     }
 
-    public UsabillaApiClientImpl(final String secret, final String accessKey,
-                                 final String usabillaHost, final int timeoutInMs, final int keepAliveInSec, final int maxThreads) {
-        this.secret = secret;
-        this.accessKey = accessKey;
-        this.usabillaHost = usabillaHost;
-        this.TimeoutInMs = timeoutInMs;
-        this.KeepAliveInSec = keepAliveInSec;
-        this.MaxThreads = maxThreads;
+    public UsabillaApiServiceImpl(final String baseUrl, final UsabillaAuthBuilder usabillaAuthBuilder) {
+        this.baseUrl = baseUrl;
+        this.usabillaAuthBuilder = usabillaAuthBuilder;
     }
 
-    public UsabillaApiClientImpl(final String secret, final String accessKey, final String usabillaHost,
-                                 final String BASE_URL, final int timeoutInMs, final int keepAliveInSec, final int maxThreads) {
-        this.secret = secret;
-        this.accessKey = accessKey;
-        this.usabillaHost = usabillaHost;
-        this.BASE_URL = BASE_URL;
-        this.TimeoutInMs = timeoutInMs;
-        this.KeepAliveInSec = keepAliveInSec;
-        this.MaxThreads = maxThreads;
-    }
-
-    public String getAllFeedbackButtons() throws Exception {
+    public String getAllFeedbackButtons(final int limit, final long since) throws Exception {
 
         //https://data.usabilla.com/live/websites/button
 
-        LocalDateTime localDateTime = LocalDateTime.of(2019, 9, 19, 16, 52, 21, 10);
-        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
-        final Date currDate = Date.from(zonedDateTime.toInstant());
+        final Date currDate = new Date(since);
 
         final String method = HttpMethod.GET.name();
-        final String requestUri = BUTTONS_URI;
-        final String host = usabillaHost;
-        final String queryString = "limit=10&since=1568714350000";
+        final String requestUri = CommonUtils.BUTTONS_URI;
+        final String queryString = String.format("limit=%s&since=%s", limit, since);
 
-        final FeedbackCommand requestCommand = getRequestCommand(currDate, method, requestUri, queryString, host);
+        final RequestCommand requestCommand = usabillaAuthBuilder.buildRequestCommand(currDate, method, requestUri, queryString);
+        System.out.println("requestCommand:" + requestCommand);
 
-        final CloseableHttpClient closeableHttpClient = buildHttpClient(BASE_URL);
+        final CloseableHttpClient closeableHttpClient = buildHttpClient(baseUrl);
 
         final HttpGet httpGet = new HttpGet(buildFeedbackUrl(requestCommand.getUri()));
 
@@ -144,111 +105,8 @@ public class UsabillaApiClientImpl implements UsabillaApiClient {
     }
 
     private URI buildFeedbackUrl(final String uri) throws URISyntaxException {
-        return new URIBuilder(String.join("/", BASE_URL, uri))
+        return new URIBuilder(String.join("/", baseUrl, uri))
                 .build();
-    }
-
-    private FeedbackCommand getRequestCommand(
-            final Date currDate,
-            final String method,
-            final String requestUri,
-            final String queryString,
-            final String host
-    ) throws NoSuchAlgorithmException, InvalidKeyException {
-        final String shortDate = getShortDateString(currDate);
-        final String longDate = getLongDateString(currDate);
-        final String credentialScope = getCredentialScope(shortDate);
-
-        final String finalUri = getUri(requestUri, queryString);
-        System.out.println(String.format("host:%s\nmethod:%s\nalgorithm:%s\nshortDate:%s\nlongDate:%s\ncredentialScope:%s\nuri:%s\nfinalUri:%s\n",
-                host, method, HMAC_SHA_256, shortDate, longDate, credentialScope, requestUri, finalUri));
-
-        final String canonicalHeaders = getCanonicalHeaders(host, longDate);
-        System.out.println(String.format("\ncanonicalHeaders:\n%s", canonicalHeaders));
-
-        System.out.println(String.format("\nsignedHeaders:\n%s", signedHeaders));
-
-        final String requestPayload = DigestUtils.sha256Hex(StringUtils.EMPTY);
-        System.out.println(String.format("\nrequestPayload:\n%s", requestPayload));
-
-        //Create Canonical String
-        final String canonicalString = getCanonicalString(method, requestUri, canonicalHeaders, requestPayload, queryString);
-        System.out.println(String.format("\ncanonicalString:\n%s", canonicalString));
-
-        final String hashedCanonicalString = DigestUtils.sha256Hex(canonicalString);
-        System.out.println(String.format("\nhashedCanonicalString:\n%s", hashedCanonicalString));
-
-        //Create string to Sign
-        final String stringToSign = getStringToSign(longDate, credentialScope, hashedCanonicalString);
-        System.out.println(String.format("\nstringToSign:\n%s", stringToSign));
-
-        //Create signature
-        final String secretKey = String.format("USBL1%s", secret);
-        System.out.println("\nsecretKey:\n" + secretKey);
-        System.out.println("\ndata:\n" + shortDate);
-
-        final Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-        SecretKeySpec secret_key = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
-        sha256_HMAC.init(secret_key);
-        final byte[] kDateBytes = sha256_HMAC.doFinal(shortDate.getBytes());
-        String kDate = toHexString(kDateBytes);
-        System.out.println(String.format("\nkDate:\n%s", kDate));
-
-        secret_key = new SecretKeySpec(kDateBytes, "HmacSHA256");
-        sha256_HMAC.init(secret_key);
-        final byte[] signingKeyBytes = sha256_HMAC.doFinal("usbl1_request".getBytes());
-        final String kSigning = toHexString(signingKeyBytes);
-        System.out.println(String.format("\nkSigning:\n%s", kSigning));
-
-        secret_key = new SecretKeySpec(signingKeyBytes, "HmacSHA256");
-        sha256_HMAC.init(secret_key);
-        final byte[] signatureBytes = sha256_HMAC.doFinal(stringToSign.getBytes());
-        final String signature = toHexString(signatureBytes);
-        System.out.println(String.format("\nsignature:\n%s", signature));
-
-        final String authorizationHeader = String.join(", ",
-                String.join(StringUtils.EMPTY, HMAC_SHA_256, " Credential=", accessKey, "/", shortDate, "/usbl1_request"),
-                String.join(StringUtils.EMPTY, "SignedHeaders=", signedHeaders),
-                String.join(StringUtils.EMPTY, "Signature=", signature));
-        System.out.println(String.format("\nauthorizationHeader:\n%s", authorizationHeader));
-
-        return new FeedbackCommand(authorizationHeader, longDate, finalUri);
-    }
-
-    private String getStringToSign(final String longDate, final String credentialScope, final String hashedCanonicalString) {
-        return String.format("%s\n%s\n%s\n%s", HMAC_SHA_256, longDate, credentialScope, hashedCanonicalString);
-    }
-
-    private String getCanonicalString(final String method, final String requestUri, final String canonicalHeaders,
-                                      final String requestPayload, final String queryParams) {
-        if (StringUtils.isNoneEmpty(queryParams)) {
-            return String.format("%s\n%s\n%s\n%s\n%s\n%s", method, requestUri, queryParams, canonicalHeaders, signedHeaders, requestPayload);
-        }
-        return String.format("%s\n%s\n%s\n%s\n%s", method, requestUri, canonicalHeaders, signedHeaders, requestPayload);
-    }
-
-    private String getCanonicalHeaders(final String host, final String longDate) {
-        return String.format("%s\n%s:%s\n", host, x_usbl_date, longDate);
-    }
-
-    private String getUri(final String uri, final String queryParams) {
-        final String baseUri = String.format("%s", uri);
-        if (Objects.nonNull(queryParams)) {
-            return String.format("%s?%s", baseUri, queryParams);
-        }
-        return baseUri;
-    }
-
-    private String getCredentialScope(final String shortDate) {
-        return shortDate + USBL_1_REQUEST;
-    }
-
-    private String getLongDateString(final Date currDate) {
-        return getDateString(currDate, longDateTimeFormatter) + Z;
-    }
-
-    private String getShortDateString(final Date currDate) {
-        return getDateString(currDate, shortDateTimeFormatter);
     }
 
 
