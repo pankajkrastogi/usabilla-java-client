@@ -15,8 +15,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Formatter;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class UsabillaAuthBuilder {
+
+    private static final Logger LOGGER = LogManager.getLogger(UsabillaAuthBuilder.class);
+
     private static final String HMAC_SHA_256 = "USBL1-HMAC-SHA256";
 
     private static final DateTimeFormatter shortDateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
@@ -50,57 +55,57 @@ public class UsabillaAuthBuilder {
         final String credentialScope = getCredentialScope(shortDate);
 
         final String finalUri = getUri(requestUri, queryString);
-        System.out.println(String.format("usabillaHost:%s\nmethod:%s\nalgorithm:%s\nshortDate:%s\nlongDate:%s\ncredentialScope:%s\nuri:%s\nfinalUri:%s\n",
+       LOGGER.debug(String.format("usabillaHost:%s\nmethod:%s\nalgorithm:%s\nshortDate:%s\nlongDate:%s\ncredentialScope:%s\nuri:%s\nfinalUri:%s\n",
                 usabillaHost, method, HMAC_SHA_256, shortDate, longDate, credentialScope, requestUri, finalUri));
 
         final String canonicalHeaders = getCanonicalHeaders(usabillaHost, longDate);
-        System.out.println(String.format("\ncanonicalHeaders:\n%s", canonicalHeaders));
+       LOGGER.debug(String.format("\ncanonicalHeaders:\n%s", canonicalHeaders));
 
-        System.out.println(String.format("\nsignedHeaders:\n%s", signedHeaders));
+       LOGGER.debug(String.format("\nsignedHeaders:\n%s", signedHeaders));
 
         final String requestPayload = DigestUtils.sha256Hex(StringUtils.EMPTY);
-        System.out.println(String.format("\nrequestPayload:\n%s", requestPayload));
+       LOGGER.debug(String.format("\nrequestPayload:\n%s", requestPayload));
 
         //Create Canonical String
         final String canonicalString = getCanonicalString(method, requestUri, canonicalHeaders, requestPayload, queryString);
-        System.out.println(String.format("\ncanonicalString:\n%s", canonicalString));
+       LOGGER.debug(String.format("\ncanonicalString:\n%s", canonicalString));
 
         final String hashedCanonicalString = DigestUtils.sha256Hex(canonicalString);
-        System.out.println(String.format("\nhashedCanonicalString:\n%s", hashedCanonicalString));
+       LOGGER.debug(String.format("\nhashedCanonicalString:\n%s", hashedCanonicalString));
 
         //Create string to Sign
         final String stringToSign = getStringToSign(longDate, credentialScope, hashedCanonicalString);
-        System.out.println(String.format("\nstringToSign:\n%s", stringToSign));
+       LOGGER.debug(String.format("\nstringToSign:\n%s", stringToSign));
 
         //Create signature
         final String secretKey = String.format("USBL1%s", secret);
-        System.out.println("\nsecretKey:\n" + secretKey);
-        System.out.println("\ndata:\n" + shortDate);
+       LOGGER.debug("\nsecretKey:\n" + secretKey);
+       LOGGER.debug("\ndata:\n" + shortDate);
 
         final Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
         SecretKeySpec secret_key = new SecretKeySpec(secretKey.getBytes(), "HmacSHA256");
         sha256_HMAC.init(secret_key);
         final byte[] kDateBytes = sha256_HMAC.doFinal(shortDate.getBytes());
         String kDate = toHexString(kDateBytes);
-        System.out.println(String.format("\nkDate:\n%s", kDate));
+       LOGGER.debug(String.format("\nkDate:\n%s", kDate));
 
         secret_key = new SecretKeySpec(kDateBytes, "HmacSHA256");
         sha256_HMAC.init(secret_key);
         final byte[] signingKeyBytes = sha256_HMAC.doFinal("usbl1_request".getBytes());
         final String kSigning = toHexString(signingKeyBytes);
-        System.out.println(String.format("\nkSigning:\n%s", kSigning));
+       LOGGER.debug(String.format("\nkSigning:\n%s", kSigning));
 
         secret_key = new SecretKeySpec(signingKeyBytes, "HmacSHA256");
         sha256_HMAC.init(secret_key);
         final byte[] signatureBytes = sha256_HMAC.doFinal(stringToSign.getBytes());
         final String signature = toHexString(signatureBytes);
-        System.out.println(String.format("\nsignature:\n%s", signature));
+       LOGGER.debug(String.format("\nsignature:\n%s", signature));
 
         final String authorizationHeader = String.join(", ",
                 String.join(StringUtils.EMPTY, HMAC_SHA_256, " Credential=", accessKey, "/", shortDate, "/usbl1_request"),
                 String.join(StringUtils.EMPTY, "SignedHeaders=", signedHeaders),
                 String.join(StringUtils.EMPTY, "Signature=", signature));
-        System.out.println(String.format("\nauthorizationHeader:\n%s", authorizationHeader));
+       LOGGER.debug(String.format("\nauthorizationHeader:\n%s", authorizationHeader));
 
         return new RequestCommand(authorizationHeader, longDate, finalUri);
     }

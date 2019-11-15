@@ -1,0 +1,239 @@
+{
+  "items":[
+    {
+      "id":"5dc1a2d9b2461d5fa81533b6",
+      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+      "comment":"Good collection of article on homepage ",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Chrome",
+        "version":"78.0.3904.87",
+        "os":"MacOSX",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-05T16:27:06.005Z",
+      "custom":{
+        "accessType":"ae:REG_ONLINE_REGISTERED",
+        "accountId":"ae:593",
+        "feedback_category":"opt1"
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "compliment"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":4,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/",
+      "Bucket":""
+    },
+    {
+      "id":"5dc1a30934b0ed5d145b10d8",
+      "userAgent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36",
+      "comment":"Alerts Rocks ",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Chrome",
+        "version":"78.0.3904.87",
+        "os":"MacOSX",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-05T16:27:53.639Z",
+      "custom":{
+        "feedback_category":null
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "compliment"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":5,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/user/alerts/journal",
+      "Bucket":""
+    },
+    {
+      "id":"5dc1dc1d42a4237734507408",
+      "userAgent":"Mozilla/5.0 (Linux; Android 9; JKM-LX1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.90 Mobile Safari/537.36",
+      "comment":"",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Chrome Mobile",
+        "version":"78.0.3904.90",
+        "os":"Android",
+        "devicetype":"Mobile Phone"
+      },
+      "date":"2019-11-05T20:31:26.024Z",
+      "custom":{
+        "accessType":"ae:ANON_GUEST",
+        "accountId":"ae:228598",
+        "feedback_category":"opt2"
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "compliment"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":5,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/",
+      "Bucket":""
+    },
+    {
+      "id":"5dc221c0f0f67b321f74de0e",
+      "userAgent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36",
+      "comment":"ok",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Chrome",
+        "version":"63.0.3239.132",
+        "os":"Win7",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-06T01:28:32.083Z",
+      "custom":{
+        "feedback_category":null
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":3,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/user/history?dgcid=Reading_History_signed_in",
+      "Bucket":""
+    },
+    {
+      "id":"5dc233a734b0ed24fb2f25fe",
+      "userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.18362",
+      "comment":"",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"IE",
+        "version":"18.18362",
+        "os":"Win10",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-06T02:44:55.253Z",
+      "custom":{
+        "accessType":"ae:ANON_IP",
+        "accountId":"ae:55629",
+        "feedback_category":"opt2"
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "compliment"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":4,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/",
+      "Bucket":""
+    },
+    {
+      "id":"5dc2446834b0ed29f6646ec2",
+      "userAgent":"Mozilla/5.0 (Windows NT 10.0; WOW64; rv:68.0) Gecko/20100101 Firefox/68.0",
+      "comment":"Good work!",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Firefox",
+        "version":"68.0",
+        "os":"Win10",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-06T03:56:24.073Z",
+      "custom":{
+        "feedback_category":"opt2"
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "compliment"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":5,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/user/history?dgcid=Reading_History_signed_in",
+      "Bucket":""
+    },
+    {
+      "id":"5dc25c7e34b0ed28a97fca4f",
+      "userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36",
+      "comment":"why i can't download?????",
+      "commentTranslated":"",
+      "commentTranslatedFrom":"",
+      "location":"",
+      "browser":{
+        "name":"Chrome",
+        "version":"77.0.3865.120",
+        "os":"Win10",
+        "devicetype":"Desktop"
+      },
+      "date":"2019-11-06T05:39:10.171Z",
+      "custom":{
+        "accessType":"ae:REG_GUEST",
+        "accountId":"ae:228598",
+        "feedback_category":"opt3"
+      },
+      "email":"",
+      "image":"",
+      "labels":[
+        "other"
+      ],
+      "nps":0,
+      "publicUrl":null,
+      "rating":3,
+      "buttonId":"button5056",
+      "tags":[
+
+      ],
+      "url":"https://xxx.com/",
+      "Bucket":""
+    }
+  ],
+  "count":10,
+  "hasMore":true,
+  "lastTimestamp":1573019995520
+}
