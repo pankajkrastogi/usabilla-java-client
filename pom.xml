@@ -21,8 +21,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git@github.com:pankajkrastogi/usabilla-java-client.git</connection>
-        <developerConnection>scm:git@github.com:pankajkrastogi/usabilla-java-client.git</developerConnection>
+        <connection>scm:git:git://github.com/pankajkrastogi/usabilla-java-client.git</connection>
+        <developerConnection>scm:git:ssh://github.com:pankajkrastogi/usabilla-java-client.git</developerConnection>
         <url>https://github.com/pankajkrastogi/usabilla-java-client</url>
         <tag>v1.0</tag>
     </scm>
