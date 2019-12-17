@@ -14,6 +14,26 @@
         <maven.compiler.target>11</maven.compiler.target>
     </properties>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:git://github.com/pankajkrastogi/usabilla-java-client.git</connection>
+        <developerConnection>scm:git:ssh://github.com:pankajkrastogi/usabilla-java-client.git</developerConnection>
+        <url>http://github.com/pankajkrastogi/usabilla-java-client/tree/master</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Pankaj Rastogi</name>
+        </developer>
+    </developers>
+
     <build>
         <plugins>
             <plugin>
