@@ -42,12 +42,6 @@ public class UsabillaAuthBuilder {
         this.usabillaHost = "host:data.usabilla.com";
     }
 
-    public UsabillaAuthBuilder(final String secret, final String accessKey, final String usabillaHost) {
-        this.secret = secret;
-        this.accessKey = accessKey;
-        this.usabillaHost = usabillaHost;
-    }
-
     public RequestCommand buildRequestCommand(final Date currDate, final String method, final String requestUri,
                                             final String queryString) throws NoSuchAlgorithmException, InvalidKeyException {
         final String shortDate = getShortDateString(currDate);

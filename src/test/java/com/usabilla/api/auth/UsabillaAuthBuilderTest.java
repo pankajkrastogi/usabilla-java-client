@@ -3,6 +3,7 @@ package com.usabilla.api.auth;
 import com.usabilla.api.client.model.RequestCommand;
 import com.usabilla.api.utils.CommonUtils;
 import com.usabilla.api.utils.HttpMethod;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,15 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class UsabillaAuthBuilderTest {
 
-    private UsabillaAuthBuilder usabillaAuthBuilder;
-
-    @BeforeEach
-    void setUp() {
-        usabillaAuthBuilder = new UsabillaAuthBuilder("mySecret", "myAccessKey");
-    }
-
     @Test
     void buildRequestCommand() throws InvalidKeyException, NoSuchAlgorithmException {
+        final UsabillaAuthBuilder usabillaAuthBuilder = new UsabillaAuthBuilder("mySecret", "myAccessKey");
+
         final LocalDateTime localDateTime = LocalDateTime.of(2019, 9, 19, 16, 52, 21, 10);
         final ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.systemDefault());
         final Date currDate = Date.from(zonedDateTime.toInstant());
@@ -42,4 +38,5 @@ class UsabillaAuthBuilderTest {
         assertEquals("20190919T165221Z", requestCommand.getxUsblDateHeader());
         assertEquals("/live/websites/button?limit=10&since=1568714350000", requestCommand.getUri());
     }
+
 }
