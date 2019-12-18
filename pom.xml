@@ -25,7 +25,7 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/pankajkrastogi/usabilla-java-client.git</connection>
+        <connection>scm:git:ssh://github.com:pankajkrastogi/usabilla-java-client.git</connection>
         <developerConnection>scm:git:ssh://github.com:pankajkrastogi/usabilla-java-client.git</developerConnection>
         <url>https://github.com/pankajkrastogi/usabilla-java-client</url>
         <tag>usabilla-java-client-1.0.1</tag>
@@ -34,6 +34,8 @@
     <developers>
         <developer>
             <name>Pankaj Rastogi</name>
+            <email>pankajkrastogi@gmail.com</email>
+            <organizationUrl>https://github.com/pankajkrastogi</organizationUrl>
         </developer>
     </developers>
 
@@ -76,7 +78,6 @@
                 <version>2.5.3</version>
                 <configuration>
                     <pushChanges>false</pushChanges>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
                     <useReleaseProfile>false</useReleaseProfile>
                     <releaseProfiles>release</releaseProfiles>
                     <goals>deploy</goals>
