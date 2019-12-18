@@ -4,7 +4,7 @@
 
     <groupId>com.github.pankajkrastogi</groupId>
     <artifactId>usabilla-java-client</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <url>https://github.com/pankajkrastogi/usabilla-java-client</url>
     <name>Usabilla-Java-Client</name>
@@ -28,7 +28,7 @@
         <connection>scm:git:git://github.com/pankajkrastogi/usabilla-java-client.git</connection>
         <developerConnection>scm:git:ssh://github.com:pankajkrastogi/usabilla-java-client.git</developerConnection>
         <url>https://github.com/pankajkrastogi/usabilla-java-client</url>
-        <tag>HEAD</tag>
+        <tag>usabilla-java-client-1.0.1</tag>
     </scm>
 
     <developers>
