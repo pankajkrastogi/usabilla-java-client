@@ -1,6 +1,6 @@
-package com.usabilla.api.auth;
+package com.github.pankajkrastogi.usabilla.auth;
 
-import com.usabilla.api.client.model.RequestCommand;
+import com.github.pankajkrastogi.usabilla.client.model.RequestCommand;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 

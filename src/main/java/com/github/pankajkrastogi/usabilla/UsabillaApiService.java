@@ -1,6 +1,6 @@
-package com.usabilla.api;
+package com.github.pankajkrastogi.usabilla;
 
-import com.usabilla.api.client.model.RequestCommand;
+import com.github.pankajkrastogi.usabilla.client.model.RequestCommand;
 
 public interface UsabillaApiService {
 

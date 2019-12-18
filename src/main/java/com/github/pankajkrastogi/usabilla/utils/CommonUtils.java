@@ -1,4 +1,4 @@
-package com.usabilla.api.utils;
+package com.github.pankajkrastogi.usabilla.utils;
 
 public class CommonUtils {
 

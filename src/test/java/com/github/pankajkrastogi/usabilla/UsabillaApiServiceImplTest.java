@@ -1,11 +1,11 @@
-package com.usabilla.api;
+package com.github.pankajkrastogi.usabilla;
 
+import com.github.pankajkrastogi.usabilla.auth.UsabillaAuthBuilder;
+import com.github.pankajkrastogi.usabilla.utils.CommonUtils;
+import com.github.pankajkrastogi.usabilla.utils.HttpMethod;
 import com.usabilla.AbstractTest;
-import com.usabilla.api.auth.UsabillaAuthBuilder;
-import com.usabilla.api.client.UsabillaClient;
-import com.usabilla.api.client.model.RequestCommand;
-import com.usabilla.api.utils.CommonUtils;
-import com.usabilla.api.utils.HttpMethod;
+import com.github.pankajkrastogi.usabilla.client.UsabillaClient;
+import com.github.pankajkrastogi.usabilla.client.model.RequestCommand;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -25,7 +25,6 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import java.nio.charset.Charset;
 import java.util.Date;
 
-import static com.usabilla.api.utils.CommonUtils.BUTTONS_URI;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 
@@ -85,7 +84,7 @@ class UsabillaApiServiceImplTest extends AbstractTest {
 
         final Date currDate = new Date(since);
         final String method = HttpMethod.GET.name();
-        final String requestUri = BUTTONS_URI + "/" + buttonId + "/feedback";
+        final String requestUri = CommonUtils.BUTTONS_URI + "/" + buttonId + "/feedback";
         final String queryString = String.format("limit=%s&since=%s", limit, since);
 
         final RequestCommand requestCommand = usabillaAuthBuilder.buildRequestCommand(currDate, method, requestUri, queryString);

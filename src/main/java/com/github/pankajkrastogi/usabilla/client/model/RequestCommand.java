@@ -1,4 +1,4 @@
-package com.usabilla.api.client.model;
+package com.github.pankajkrastogi.usabilla.client.model;
 
 import java.util.StringJoiner;
 

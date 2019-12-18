@@ -1,8 +1,9 @@
-package com.usabilla.api;
+package com.github.pankajkrastogi.usabilla;
 
-import com.usabilla.api.auth.UsabillaAuthBuilder;
-import com.usabilla.api.client.UsabillaClient;
-import com.usabilla.api.client.model.RequestCommand;
+import com.github.pankajkrastogi.usabilla.auth.UsabillaAuthBuilder;
+import com.github.pankajkrastogi.usabilla.utils.CommonUtils;
+import com.github.pankajkrastogi.usabilla.client.UsabillaClient;
+import com.github.pankajkrastogi.usabilla.client.model.RequestCommand;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -14,13 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import static com.usabilla.api.utils.CommonUtils.BASE_URL;
 
 public class UsabillaApiServiceImpl implements UsabillaApiService {
 
@@ -64,7 +59,7 @@ public class UsabillaApiServiceImpl implements UsabillaApiService {
     }
 
     private URI buildUri(final String uri) throws URISyntaxException {
-        return new URIBuilder(String.join("/", BASE_URL, uri))
+        return new URIBuilder(String.join("/", CommonUtils.BASE_URL, uri))
                 .build();
     }
 

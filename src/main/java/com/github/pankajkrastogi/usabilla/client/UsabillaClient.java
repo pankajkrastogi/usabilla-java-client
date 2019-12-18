@@ -1,6 +1,6 @@
-package com.usabilla.api.client;
+package com.github.pankajkrastogi.usabilla.client;
 
-import com.usabilla.api.utils.CommonUtils;
+import com.github.pankajkrastogi.usabilla.utils.CommonUtils;
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.CloseableHttpResponse;

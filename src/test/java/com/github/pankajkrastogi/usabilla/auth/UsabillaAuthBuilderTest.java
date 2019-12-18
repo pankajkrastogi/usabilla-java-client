@@ -1,10 +1,8 @@
-package com.usabilla.api.auth;
+package com.github.pankajkrastogi.usabilla.auth;
 
-import com.usabilla.api.client.model.RequestCommand;
-import com.usabilla.api.utils.CommonUtils;
-import com.usabilla.api.utils.HttpMethod;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.github.pankajkrastogi.usabilla.utils.CommonUtils;
+import com.github.pankajkrastogi.usabilla.utils.HttpMethod;
+import com.github.pankajkrastogi.usabilla.client.model.RequestCommand;
 import org.junit.jupiter.api.Test;
 
 import java.security.InvalidKeyException;
