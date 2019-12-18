@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.pankajkrastogi</groupId>
-    <artifactId>api-client</artifactId>
+    <artifactId>usabilla-java-client</artifactId>
     <version>1.3-SNAPSHOT</version>
 
     <properties>
@@ -77,19 +77,19 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>2.8.2</version>
-                <executions>
-                    <execution>
-                        <id>default-deploy</id>
-                        <phase>deploy</phase>
-                        <goals>
-                            <goal>deploy</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>maven-deploy-plugin</artifactId>-->
+<!--                <version>2.8.2</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>default-deploy</id>-->
+<!--                        <phase>deploy</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>deploy</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
@@ -196,7 +196,7 @@
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
         </repository>
     </distributionManagement>
 
